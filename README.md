@@ -1,46 +1,75 @@
 
-# credit card model predication 
-Key findings: People with the highest income, and who have at least one partner, are more likely to be approved for a credit card.
+# Time series model Sales and Demand Forecasting for E-commerce
 
-## problem statement 
-This app predicts if an applicant will be approved for a credit card or not. Each time there is a hard enquiry your credit score is affected negatively. This app predict the probability of being approved without affecting your credit score. This app can be used by applicant who wants to find out if they will be approved for a credit card without affecting their credit score.
+This project focuses on building a robust time-series forecasting solution to predict daily sales and daily demand across multiple product categories for an e-commerce platform. The solution leverages advanced forecasting models and machine learning techniques to optimize inventory management, improve operational efficiency, and enhance customer satisfaction.
 
-## Methods 
-- Exploratory data analysis
-- Bivariate analysis
-- Multivarate correlation
-- S3 bucket model hosting
-- Model deployment
+## Problem Statement
+Accurate time-series forecasting is crucial for optimizing inventory and supply chain management, reducing costs, and improving customer satisfaction in the highly competitive e-commerce industry. This project aims to:
+
+Predict daily sales for the e-commerce platform.
+Forecast daily demand across multiple product categories.
+
+## Business Benefits
+Inventory Optimization: Helps maintain optimal stock levels, reducing the risk of over-stocking or under-stocking.
+Marketing Effectiveness: Evaluates the impact of marketing campaigns on sales and demand.
+Operational Efficiency: Reduces storage, shipping, and handling costs by aligning inventory levels with demand.
+Customer Satisfaction: Ensures product availability, leading to timely deliveries and improved customer satisfaction.
+
+## Key Business Metrics
+- Inventory Turnover Rate: Measures how quickly inventory is sold and replaced.
+- Customer Satisfaction Score (CSAT): Ensures product availability for timely deliveries.
+- Operational Costs: Helps control costs related to storage and shipping.
+- Stockout Rate: Reduces the frequency of stockouts, ensuring products are available when needed
+## Features and Methodology
+### Data Preprocessing
+- Filtered orders with delivered status.
+- Merged datasets to create a unified view of orders, products, and categories.
+- Engineered features such as holidays, lag features, and rolling statistics.
+- Handled duplicate product categories and missing values.
+## Forecasting Models
+### Daily Sales Forecasting:
+- SARIMAX: A seasonal ARIMA model with exogenous variables (e.g., holidays).
+- XGBoost: A machine learning approach using lag features, rolling statistics, and temporal features.
+### Demand Forecasting Across Product Categories:
+
+- Built a global model for all product categories using XGBoost.
+Engineered features such as lags, rolling means, day of the week, and holiday indicators.
+## Key Insights
+- SARIMAX: Captures seasonality and trends but struggles with accuracy for complex patterns.
+- XGBoost: Outperforms SARIMAX in accuracy, especially for daily sales forecasting.
+- Global Model for Demand Forecasting: Simplifies maintenance and deployment by training a single model for all product categories.
+
+## Results
+1. Daily Sales Forecasting:
+
+- SARIMAX RMSE: ~14,000
+- XGBoost RMSE: ~3,000 (significantly better performance)
+
+2. Demand Forecasting Across Product Categories:
+
+RMSE varies by category, with the global XGBoost model providing accurate predictions for most categories
 
 
 
-## Tech Stack
 
-Python (refer to requirement.txt for the packages used in this project)
-Streamlit (interface for the model)
-AWS S3 (model storage)
+## Installation
 
-## Quick glance at the results
-- Correlation between the features.
-- Confusion matrix of gradrient boosting classifier.
-- ROC curve of gradrient boosting classifier.
+To run this project, you need the following Python packages:
 
-Model	     and            Recall score
-Support vector machine	    88%,
-Gradient boosting	        90%,
-Adaboost	                79%
+```bash
+  pip install pandas numpy matplotlib holidays pmdarima    statsmodels xgboost scikit-learn
+```
+## Usage
+1. Clone the repository
+2. Unzip the dataset zip file from /artifacts into /data folder.
 
-- The final model used is: Gradient boosting
+3. open the notebook sales_demand_forecast.ipynb with your preferred Jupyter notebook IDE.
+## Visualizations
+- Daily Sales Trends: Visualizes sales patterns, seasonality, and outliers (e.g., Black Friday).
+- ETS Decomposition: Highlights trends, seasonality, and residuals in sales data.
+- Forecast Plots: Compares actual vs. predicted sales and demand.
 
-- Metrics used: Recall
-
-- Why choose precision as metrics: Since the objective of this problem is to minimize the risk of credit default for the financial institution, the metrics to use depends on the current economical situation:
-
-- During the time of a bull market (when the economy is expending), people feel wealthy and usually are employed. Money is usually cheap and the risk of default is low. The financial institution is able to handle the risk of default therefore is not very strict on giving out credit. The financial institution can handle a number of bad clients as long as the vast majority of applicants are good clients (aka those who payback their credit).In this case, having a good recall (sensitivity) is ideal.
-
-- During a bear market (when the economy is contracting), people loose their jobs and their money through the stock market. Many people struggle to meet their financial obligations. The financial institution therefore tend to be more conservative on giving out credit or loans. The financial institution can't afford to give out credit to clients who won't be able to pay back their credit. The financial institution would rather have a smaller number of good clients even if it means that some good clients where denied credit, and ideally not have any bad client. In this case, having a good precision (specificity) is desirable.
-
-Note: There is always a trade-off between precision and recall. Choosing the right metrics depends on the problem you are solving.
-
-Conclusion: In our case, since we are in the longest bull market (not including the March 2024 flash crash), we will use recall as our metric.
-
+## Future Work
+- Incorporate external factors such as weather, promotions, and competitor pricing.
+- Experiment with deep learning models (e.g., LSTMs) for improved accuracy.
+- Develop a web-based dashboard for real-time forecasting and visualization.
